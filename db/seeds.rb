@@ -1,4 +1,3 @@
-
 # Sample make and model data from: https://github.com/n8barr/automotive-model-year-data
 makes_and_models = [
   ['Bentley', 'Mulsanne'],
@@ -513,3 +512,32 @@ makes_and_models = [
   ['Volvo', 'XC90']
 ]
 
+# Create `Make` and `Model` records based on the data above
+makes_and_models.each do |vehicle_info|
+  make = Make.where(name: vehicle_info[0]).first_or_create!
+  Model.where(name: vehicle_info[1], make_id: make.id).first_or_create!
+end
+
+# Create `Options` for specific makes and models
+# I'm just making this up for some sample data
+
+# Create an "All wheel drive" option for all Subaru makes
+subaru = Make.where(name: 'Subaru').first
+awd = Option.where(name: 'All wheel drive').first_or_create!
+subaru.models.each do |model|
+  model.options.create!(option: awd)
+end
+
+# Create a seat warmer for all Lexus models
+lexus = Make.where(name: 'Lexus').first
+seat_warmers = Option.where(name: 'Seat warmers').first_or_create!
+lexus.models.each do |model|
+  model.model_options.create!(option: seat_warmers)
+end
+
+# Create a sun roof option only for Ford F150, F250, F350, and F450
+ford = Make.where(name: 'Ford').first
+['F150', 'F250', 'F350', 'F450'].each do |model_name|
+  model = ford.models.where(name: model_name).first
+  model.model_options.create!(name: 'Sun roof')
+end
