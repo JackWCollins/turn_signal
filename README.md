@@ -16,4 +16,4 @@ I definitely omitted certain features that I would have included for a productio
 * Add the ability to search on each endpoint
 * Allow the client to specify which relationships should be included. For example, you could allow clients to specifically request the vehicles for each models via `/models?include=vehicles`. https://github.com/rails-api/active_model_serializers/issues/968 
 * Add real authorization key handling... don't just use a constant string
-
+* Perhaps... don't allow users to add options to their vehicle that aren't listed on the vehicle `model`.
