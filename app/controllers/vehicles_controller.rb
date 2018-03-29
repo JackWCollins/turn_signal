@@ -16,6 +16,8 @@ class VehiclesController < ApplicationController
   def create
     @vehicle = Vehicle.new(vehicle_params)
     if @vehicle.save
+      options = Option.where(id: params[:vehicle][:option_ids])
+      @vehicle.options << options
       render json: @vehicle, include: 'make,model,options'
     else
       render json: validation_errors(@vehicle), status: 400
@@ -28,6 +30,9 @@ class VehiclesController < ApplicationController
     end
 
     if @vehicle.update_attributes(vehicle_params)
+      @vehicle.options.destroy_all
+      options = Option.where(id: params[:vehicle][:option_ids])
+      @vehicle.options << options
       render json: @vehicle, include: 'make,model,options'
     else
       render json: validation_errors(@vehicle), status: 400
@@ -50,6 +55,6 @@ class VehiclesController < ApplicationController
   end
 
   def vehicle_params
-    params.require(:vehicle).permit(:year, :description, :make_id, :model_id, option_ids: [])
+    params.require(:vehicle).permit(:year, :description, :make_id, :model_id)
   end
 end
