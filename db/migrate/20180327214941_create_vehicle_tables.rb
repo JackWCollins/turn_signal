@@ -14,6 +14,7 @@ class CreateVehicleTables < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :makes, :name, unique: true
 
     create_table :models do |t|
       t.string :name

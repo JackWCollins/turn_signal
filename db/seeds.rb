@@ -525,19 +525,20 @@ end
 subaru = Make.where(name: 'Subaru').first
 awd = Option.where(name: 'All wheel drive').first_or_create!
 subaru.models.each do |model|
-  model.options.create!(option: awd)
+  model.options << awd
 end
 
 # Create a seat warmer for all Lexus models
 lexus = Make.where(name: 'Lexus').first
 seat_warmers = Option.where(name: 'Seat warmers').first_or_create!
 lexus.models.each do |model|
-  model.model_options.create!(option: seat_warmers)
+  model.options << seat_warmers
 end
 
 # Create a sun roof option only for Ford F150, F250, F350, and F450
 ford = Make.where(name: 'Ford').first
+sun_roof = Option.where(name: 'Sun roof').first_or_create!
 ['F150', 'F250', 'F350', 'F450'].each do |model_name|
   model = ford.models.where(name: model_name).first
-  model.model_options.create!(name: 'Sun roof')
+  model.options << sun_roof
 end
