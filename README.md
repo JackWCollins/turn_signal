@@ -1,6 +1,6 @@
 # Turn Signal
 
-This is a sample API that allows CRUD actions for Vehicles, Makes, Models, and vehicle Options. Visit the [API Docs](https://jackwcollins.github.io/slate/) for more information.
+This is a sample API that allows CRUD actions for Vehicles, Makes, Models, and vehicle Options. Visit the [API Docs](https://jackwcollins.github.io/turn_signal_docs/) for more information.
 
 ### Tech Stack
 * Rails 5.1 / Ruby 2.3.1
