@@ -10,7 +10,7 @@ class MakesController < ApplicationController
   end
 
   def index
-    render json: Make.order(created_at: :desc).page(params[:page]), include: 'models'
+    render json: Make.order(created_at: :desc).includes(:models).page(params[:page]), include: 'models'
   end
 
   def create

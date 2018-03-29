@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authenticate_request
+  rescue_from ActionController::ParameterMissing, with: :missing_required_parameter
 
   def not_found_error(record_type)
     "Sorry, we could not find that #{record_type}."
@@ -17,5 +18,9 @@ class ApplicationController < ActionController::API
       render json: {errors: ["Incorrect auth token"]}, status: 401
       return
     end
+  end
+
+  def missing_required_parameter(exception)
+    render json: {errors: ["Please nest the object parameters under the object name: #{exception.message}"]}
   end
 end
