@@ -5,18 +5,18 @@ class VehiclesController < ApplicationController
     if @vehicle.blank?
       render json: {errors: [not_found_error("Vehicle")]}, status: 404
     else
-      render json: @vehicle
+      render json: @vehicle, include: 'make,model,options'
     end
   end
 
   def index
-    render json: Vehicle.order(created_at: :desc).page(params[:page])
+    render json: Vehicle.order(created_at: :desc).page(params[:page]), include: 'make,model,options'
   end
 
   def create
     @vehicle = Vehicle.new(vehicle_params)
     if @vehicle.save
-      render json: @vehicle
+      render json: @vehicle, include: 'make,model,options'
     else
       render json: validation_errors(@vehicle), status: 400
     end
@@ -28,7 +28,7 @@ class VehiclesController < ApplicationController
     end
 
     if @vehicle.update_attributes(vehicle_params)
-      render json: @vehicle
+      render json: @vehicle, include: 'make,model,options'
     else
       render json: validation_errors(@vehicle), status: 400
     end

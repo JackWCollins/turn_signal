@@ -5,18 +5,18 @@ class MakesController < ApplicationController
     if @make.blank?
       render json: {errors: [not_found_error("Make")]}, status: 404
     else
-      render json: @make
+      render json: @make, include: 'models'
     end
   end
 
   def index
-    render json: Make.order(created_at: :desc).page(params[:page])
+    render json: Make.order(created_at: :desc).page(params[:page]), include: 'models'
   end
 
   def create
     @make = Make.new(make_params)
     if @make.save
-      render json: @make
+      render json: @make, include: 'models'
     else
       render json: validation_errors(@make), status: 400
     end
@@ -28,7 +28,7 @@ class MakesController < ApplicationController
     end
 
     if @make.update_attributes(make_params)
-      render json: @make
+      render json: @make, include: 'models'
     else
       render json: validation_errors(@make), status: 400
     end

@@ -5,12 +5,12 @@ class ModelsController < ApplicationController
     if @model.blank?
       render json: {errors: [not_found_error("Model")]}, status: 404
     else
-      render json: @model
+      render json: @model, include: 'make,models,options'
     end
   end
 
   def index
-    render json: Model.order(created_at: :desc).page(params[:page])
+    render json: Model.order(created_at: :desc).page(params[:page]), include: 'make,models,options'
   end
 
   def create
@@ -28,7 +28,7 @@ class ModelsController < ApplicationController
     end
 
     if @model.update_attributes(model_params)
-      render json: @model
+      render json: @model, include: 'make,models,options'
     else
       render json: validation_errors(@model), status: 400
     end

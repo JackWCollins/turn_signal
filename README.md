@@ -13,5 +13,6 @@ This is a sample API that allows CRUD actions for Vehicles, Makes, Models, and v
 
 I definitely omitted certain features that I would have included for a production application. Some of those are: 
 
+* Add the ability to search on each endpoint
 * Allow the client to specify which relationships shoudl be included. For example, you could allow clients to specifically request the vehicles for each models via `/models?include=vehicles`. https://github.com/rails-api/active_model_serializers/issues/968 
 * Add real authorization key handling... don't just use a constant string
