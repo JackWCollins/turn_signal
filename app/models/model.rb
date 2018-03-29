@@ -5,5 +5,13 @@ class Model < ApplicationRecord
   has_many :options, through: :model_options
 
   validates_presence_of :name, message: "Please specify a name for this model."
-  validates_presence_of :make_id, message: "Please specify a vehicle make."
+  validate :has_make
+
+  private
+
+  def has_make
+    unless make
+      errors.add(:make_id, "Please specify a vehicle make.")
+    end
+  end
 end

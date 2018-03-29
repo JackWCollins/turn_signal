@@ -6,11 +6,23 @@ class Vehicle < ApplicationRecord
 
   validates_presence_of :year, message: "Please include the model year of the vehicle."
   validates_presence_of :description, message: "Please specify a description for this vehicle."
-  validates_presence_of :make_id, message: "Please specify the make of the vehicle."
-  validates_presence_of :model_id, message: "Please specify the model of the vehicle."
+  validate :has_make
+  validate :has_model
   validate :model_belongs_to_make
 
   private
+
+  def has_make
+    unless make
+      errors.add(:make_id, "Please specify the make of the vehicle.")
+    end
+  end
+
+  def has_model
+    unless model
+      errors.add(:model_id, "Please specify the model of the vehicle.")
+    end
+  end
 
   def model_belongs_to_make
     return unless model && make
